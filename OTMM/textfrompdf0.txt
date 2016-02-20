@@ -1,0 +1,565 @@
+784 IEEE TRANSACTIONS ON SYSTEMS, MAN, AND CYBERNETICS—PART A: SYSTEMS AND HUMANS, VOL. 42, NO. 3, MAY 2012
+An Ontology-Based Text-Mining Method to Cluster
+Proposals for Research Project Selection
+Jian Ma, Wei Xu, Yong-hong Sun, Efraim Turban,
+Shouyang Wang, and Ou Liu
+Abstract—Research project selection is an important task for govern-
+Fig. 1. Research project selection processes in the NSFC.
+ment and private research funding agencies. When a large number of
+research proposals are received, it is common to group them according
+Fig. 1 shows the processes of research project selection at the
+to their similarities in research disciplines. The grouped proposals are
+then assigned to the appropriate experts for peer review. Current meth-
+National Natural Science Foundation of China (NSFC), i.e., CFP,
+ods for grouping proposals are based on manual matching of similar
+proposal submission, proposal grouping, proposal assignment to ex-
+research discipline areas and/or keywords. However, the exact research
+perts, peer review, aggregation of review results, panel evaluation,
+discipline areas of the proposals cannot often be accurately designated
+and ﬁnal awarding decision [1]. These processes are very similar in
+by the applicants due to their subjective views and possible misinter-
+pretations. Therefore, rich information in the proposals’ full text can be other funding agencies, except that there are a very large number of
+used effectively. Text-mining methods have been proposed to solve the
+proposals that need to be grouped for peer review in the NSFC.
+problem by automatically classifying text documents, mainly in English.
+In the NSFC, the number of research proposals received has more
+However, these methods have limitations when dealing with non-English
+than doubled in the past four years, with over 110 000 proposals
+language texts, e.g., Chinese research proposals. This paper presents a
+submitted in one deadline in March 2010. Four to ﬁve reviewers are
+novel ontology-based text-mining approach to cluster research proposals
+based on their similarities in research areas. The method is efﬁcient and
+assigned to review each proposal so as to assure accurate and reliable
+effective for clustering research proposals with both English and Chinese
+opinions on proposals. To deal with the large volume, it is necessary to
+texts. The method also includes an optimization model that considers ap-
+group proposals according to their similarities in research disciplines
+plicants’ characteristics for balancing proposals by geographical regions.
+and then to assign the proposal groups to relevant reviewers.
+The proposed method is tested and validated based on the selection process
+at the National Natural Science Foundation of China. The results can also Founded in 1986, the NSFC is the largest government funding
+be used to improve the efﬁciency and effectiveness of research project
+agency in China, with the primary aim to fund and manage basic
+selection processes in other government and private research funding
+research. The agency is made up of seven scientiﬁc departments, four
+agencies.
+bureaus, one general ofﬁce, and three associated units. The scientiﬁc
+Index Terms—Clustering analysis, decision support systems, ontology,
+departments are the decision-making units responsible for funding
+research project selection, text mining.
+recommendations and management of funded projects. Departments
+are classiﬁed according to scientiﬁc research areas, including mathe-
+I. INTRODUCTION
+matical and physical sciences, chemical sciences, life sciences, earth
+sciences,engineeringandmaterialsciences,informationsciences,and
+Selection of research projects is an important and recurring activity
+management sciences. These departments are further divided into 40
+in many organizations such as government research funding agencies.
+divisions with a focus on more speciﬁc research areas. For example,
+It is a challenging multiprocess task that begins with a call for pro-
+the Department of Management Science is further divided into three
+posals (CFP) by a funding agency. The CFP is distributed to relevant
+divisions:ManagementScienceandEngineering,MacroManagement
+communities such as universities or research institutions. The research
+and Policy,andBusiness Administration. Furthermore, divisions are
+proposals are submitted to the funding agency and then are assigned
+divided into discipline areas called programs.
+to experts for peer review. The review results are collected, and the
+The department is responsible for the selection tasks, and it ded-
+proposals are then ranked based on the aggregation of the experts’
+icates the tasks to divisions or programs. Division managers or pro-
+review results.
+gram directors then group the proposals and assign them to external
+reviewers for evaluation and commentary. However, they may not have
+adequate knowledge in all research disciplines, and contents of many
+proposals were not fully understood when the proposals were grouped.
+Manuscript received October 13, 2009; revised June 22, 2010 and
+January 14, 2011; accepted May 31, 2011. Date of publication March 19, Therefore, there was an urgent need for an effective and feasible
+2012; date of current version April 13, 2012. This work was supported in part
+approach to group the submitted research proposals with computer
+by the National Natural Science Foundation of China (Project No. 71001103,
+supports. An ontology-based text-mining approach is proposed to
+71171172, and J1124003) and in part by the General Research Fund of the
+solve the problem.
+Hong Kong SAR Government (Project No: 119611). This paper was recom-
+The remainder of this paper is organized as follows. Section II
+mended by Associate Editor W. Pedrycz.
+J. Ma and E. Turban are with the Department of Information Systems, City
+reviews the literature on research project selection and grouping of
+University of Hong Kong, Kowloon, Hong Kong (e-mail: isjian@cityu.edu.hk;
+proposals. The proposed method is described in Section III. Section IV
+efraimtur@yahoo.com).
+validates and evaluates the method, and then discusses the potential
+W. Xu is with the School of Information, Renmin University of China,
+application in the NSFC. Finally, Section V provides the conclusion,
+Beijing 100872, China (e-mail: weixu@ruc.edu.cn).
+Y.-H. Sun is with the School of Management, Xi’an Jiaotong University,
+and it points to future work.
+Xi’an 710049, China (e-mail: simonsun@mail.xjtu.edu.cn).
+S. Wang is with the Institute of Systems Science, Academy of Mathematics
+and Systems Science, Chinese Academy of Sciences, Beijing 100080, China
+II. LITERATURE REVIEW
+(e-mail: sywang@amss.ac.cn).
+O. Liu is with the School of Accounting and Finance, The Hong Kong Poly-
+Selection of research projects is an important research topic in
+technic University, Kowloon, Hong Kong (e-mail: aﬂiuou@inet.polyu.edu.hk).
+research and development (R&D) project management. Previous re-
+Color versions of one or more of the ﬁgures in this paper are available online
+search deals with speciﬁc topics, and several formal methods and
+at http://ieeexplore.ieee.org.
+Digital Object Identiﬁer 10.1109/TSMCA.2011.2172205 models are available for this purpose. For example, Chen and Gorla
+1083-4427/$31.00 © 2012 IEEE
+IEEE TRANSACTIONS ON SYSTEMS, MAN, AND CYBERNETICS—PART A: SYSTEMS AND HUMANS, VOL. 42, NO. 3, MAY 2012 785
+[2] proposed a fuzzy-logic-based model as a decision tool for project
+selection. Henriksen and Traynor [3] presented a scoring tool for
+project evaluation and selection. Ghasemzadeh and Archer [4] offered
+a decision support approach to project portfolio selection. Machacha
+and Bhattacharya [5] proposed a fuzzy logic approach to project selec-
+tion. Butleretal. [6] used a multiple attribute utility theory for project
+ranking and selection. Loch and Kavadias [7] established a dynamic
+programming model for project selection, while Meade and Presley
+[8] developed an analytic network process model. Greiner et al. [9]
+proposed a hybrid AHP and integer programming approach to support
+project selection, and Tian et al. [10] suggested an organizational
+decision support approach for selecting R&D projects.
+Cook et al. [11] presented a method of optimal allocation of
+proposals to reviewers in order to facilitate the selection process.
+Arya and Mittendorf [12] proposed a rotation program method for
+project assignment. Choi and Park [13] used text-mining approach
+for R&D proposal screening. Girotra et al. [14] offered an empirical
+study to value projects in a portfolio. Sun et al. [15] developed a
+decision support system to evaluate reviewers for research project
+selection. Finally, Sun et al. [16] proposed a hybrid knowledge-based
+and modeling approach to assign reviewers to proposals for research
+project selection.
+Methods have been developed to group proposals for peer review
+tasks. For example, Hettich and Pazzani [17] proposed a text-mining
+approach to group proposals, identify reviewers, and assign reviewers
+to proposals. Current methods group proposals according to keywords.
+Unfortunately, proposals with similar research areas might be placed
+in wrong groups due to the following reasons: ﬁrst, keywords are
+incomplete information about the full content of the proposals. Second,
+keywords are provided by applicants who may have subjective views
+and misconceptions, and keywords are only a partial representation of
+the research proposals. Third, manual grouping is usually conducted
+by division managers or program directors in funding agencies. They Fig. 2. Process of the proposed OTMM.
+may have different understanding about the research disciplines and
+may not have adequate knowledge to assign proposals into the right
+focus on English text. TMMs which deal with English are not effective
+groups. Text-mining methods (TMMs) [18], [19] have been designed
+in processing Chinese text [28]. For example, Chinese text consists
+to group proposals based on understating the English text, but they
+of strings of Chinese characters, while English text uses words. Also,
+have limitations when dealing with other language texts, e.g., in
+Chinese text has no delimiters to mark word boundaries, while English
+Chinese. Also, when the number of proposals and reviewers increases
+text uses a space as word delimiter. Several methods were proposed
+(e.g., 110 000 proposals and 70 000 reviewers at the NSFC), it becomes
+to deal with Chinese text [29]–[32], but they are not efﬁcient or
+a real challenge to ﬁnd an effective and feasible method to group
+sufﬁciently robust to process research proposals.
+research proposals written in Chinese.
+To solve the aforementioned problems, an ontology-based TMM
+This paper presents a hybrid method for grouping Chinese re-
+(OTMM) is proposed. An ontology is a knowledge repository in which
+search proposals for project selection. It uses text-mining, multilingual
+concepts and terms are deﬁned as well as relationships between these
+ontology, optimization, and statistical analysis techniques to cluster
+concepts [38]–[41]. It consists of a set of concepts, axioms, and
+research proposals based on their similarities. The proposed approach
+relationships that describe a domain of interests and represents an
+has been successfully tested at the NSFC. The experimental results
+agreed-upon conceptualization of the domain’s “real-world” setting.
+indicated that the method can also be used to improve the efﬁciency
+Implicit knowledge for humans is made explicit for computers by
+and effectiveness of the research project selection process.
+ontology [42]–[44]. Thus, ontology can automate information pro-
+cessing and can facilitate text mining in a speciﬁc domain (such as
+research project selection). The proposed OTMM is used together with
+III. ONTOLOGY-BASED TEXT MINING TO CLUSTER
+statistical method and optimization models and consists of four phases,
+RESEARCH PROPOSALS
+as shown in Fig. 2. First, a research ontology containing the projects
+In the NSFC, after proposals are submitted, the next important task funded in latest ﬁve years is constructed according to keywords, and
+is to group proposals and assign them to reviewers. The proposals in it is updated annually (phase 1). Then, new research proposals are
+each group should have similar research characteristics. For instance, if classiﬁed according to discipline areas using a sorting algorithm (phase
+the proposals in a group fall into the same primary research discipline 2). Next, with reference to the ontology, the new proposals in each dis-
+(e.g., supply chain management) and the number of proposals is small, cipline are clustered using a self-organized mapping (SOM) algorithm
+manual grouping based on keywords listed in proposals can be used. (phase 3). Finally, (phase 4) if the number of proposals in each cluster
+However, if the number of proposals is large, it is very difﬁcult to group is still very large, they will be further decomposed into subgroups
+proposals manually. where the applicants’ characteristics are taken into consideration (e.g.,
+Although there are several text-mining approaches that can be used applicants’ afﬁliations in each proposal group should be diverse). Each
+to cluster and classify documents [20]–[27], they are developed with a phase with its details is described in the following sections.
+786 IEEE TRANSACTIONS ON SYSTEMS, MAN, AND CYBERNETICS—PART A: SYSTEMS AND HUMANS, VOL. 42, NO. 3, MAY 2012
+basis of several speciﬁc research areas. Next, it is further di-
+vided into some narrower discipline areas. Finally, it leads
+to research topics in terms of the feature set of disciplines
+created in step 1. The research ontology is constructed,
+and its rough structure is shown in Fig. 5. It is more
+complex than just a tree-like structure. First, there are some
+cross-discipline research areas (e.g., “data mining” can be
+placed under “Information Management” in “Management
+Sciences” or under “Artiﬁcial Intelligence” in “Information
+Sciences”). Second, there are some synonyms used by
+different project applicants, which have different names
+in different proposals but represent the same concepts.
+Therefore, the research ontology allows more complex
+Fig. 3. Keywords ofA in a year.
+k
+relationship between concepts besides the basic tree-like
+structure. Also, to deal with proposals with both English
+and Chinese text, it is designed as a multilingual ontology
+[45], which can process and share knowledge represented
+in multiple languages.
+Step 3) Updating the research ontology. Once the project funding
+is completed each year, the research ontology is updated
+according to agency’s policy and the change of the feature
+set.
+Using the research ontology, the submitted research proposals can
+be classiﬁed into disciplines correctly, and research proposal in one
+discipline can be clustered effectively and efﬁciently. The details will
+be given in the following two sections.
+Fig. 4. Feature set ofA .
+k B. Phase2:ClassifyingNewResearchProposalsIntoDisciplines
+Proposals are classiﬁed by the discipline areas to which they belong.
+A. Phase1:ConstructingaResearchOntology A simple sorting algorithm is used next for proposals’ classiﬁcation.
+This is done using the research ontology as follows.
+Funding agencies such as the NSFC maintain a directory of dis-
+Suppose that there are K discipline areas, and A denotes area
+k
+cipline areas that form a tree structure. As a domain ontology [41],
+k(k=1,2,...,K). P denotes proposals i(i=1,2,...,I),andS
+i k
+a research ontology is a public concept set of the research project
+represents the set of proposals which belongs to areak. Then, a sorting
+management domain. The research topics of different disciplines can
+algorithm can be implemented to classify proposals to their discipline
+be clearly expressed by a research ontology. Suppose that there areK
+areas, as shown in Table I.
+discipline areas, and A denotes discipline area k(k=1,2,...,K).
+k
+A research ontology can be constructed in the following three steps to
+represent the topics of the disciplines.
+C. Phase3:ClusteringResearchProposalsBasedonSimilarities
+Step 1) Creating the research topics of the disciplineA ,
+k UsingTextMining
+(k=1,2,...,K). The keywords of the supported
+After the research proposals are classiﬁed by the discipline areas,
+research projects each year are collected, and their
+the proposals in each discipline are clustered using the text-mining
+frequencies are counted (shown in Fig. 3). The keywords
+technique [18], [19]. The main clustering process consists of ﬁve
+and their frequencies are denoted by the feature set
+steps, as shown in Fig. 6: text document collection, text document
+(No ,ID,year,{(keyword ,frequency),(keyword ,
+k k 1 1 2
+preprocessing, text document encoding, vector dimension reduction,
+frequency ),...,(keyword ,frequency )}),where
+2 k k
+and text vector clustering.
+No is the sequence number of the kth record and ID
+k k
+The details of each step are as follows.
+is the corresponding discipline code. For instance, if
+discipline A has two keywords in 2007 (i.e., “data Step 1) Text document collection. After the research proposals are
+k
+mining”and“business intelligence”) and the total number classiﬁed according to the discipline areas, the proposal
+of counts for them are 30 and 50, respectively, the discipline documents in each disciplineA (k=1,2,...,K) are col-
+k
+can be denoted by (No , ID , 2007, {(data mining, 30), lected for text document preprocessing.
+k k
+(business intelligence, 50)}). In this way, a feature set of Step 2) Textdocumentpreprocessing. The contents of proposals are
+each discipline can be created. The keyword frequency usually nonstructured. Because the texts of the proposals
+in the feature set is the sum of the same keywords that consist of Chinese characters which are difﬁcult to seg-
+appeared in this discipline during the most recent ﬁve years ment, the research ontology is used to analyze, extract, and
+(shown in Fig. 4), and then, the feature set ofA is denoted identify the keywords in the full text of the proposals. For
+k
+by (No ,ID ,{(keyword ,frequency )(keyword , example, “Research on behavior modeling and detection
+k k 1 1 2
+frequency ),...,(keyword ,frequency )}). methods in ﬁnancial fraud using ensemble learning” can
+2 k k
+Step 2) Constructing the research ontology. First, the research on- be divided into word sets {“behavior modeling,” “detection
+tology is categorized according to scientiﬁc research areas method,” “ﬁnancial fraud,” “ensemble learning”}. Finally,
+introduced in the background. It is then developed on the a further reduction in the vocabulary size can be achieved
+IEEE TRANSACTIONS ON SYSTEMS, MAN, AND CYBERNETICS—PART A: SYSTEMS AND HUMANS, VOL. 42, NO. 3, MAY 2012 787
+Fig. 5. Structure of the research ontology.
+TA B L E I
+the most important keywords in terms of frequency. Latent
+SUMMARY OF THE SORTING ALGORITHM
+semantic indexing (LSI) is used to solve the problem
+[18]. It not only reduces the dimensions of the feature
+vectors effectively but also creates the semantic relations
+among the keywords. LSI is a technique for substituting
+the original data vectors with shorter vectors in which
+the semantic information is preserved. To reduce the di-
+mensions of the document vectors without losing useful
+information in a proposal, a term-by-document matrix is
+formed, where there is one column that corresponds to the
+term frequency of a document. Furthermore, the term-by-
+document matrix is decomposed into a set of eigenvectors
+using singular-value decomposition. The eigenvectors that
+have the least impacts on the matrix are then discarded.
+Thus, the document vector formed from the term of the
+remaining eigenvectors has a very small dimension and
+retains almost all of the relevant original features.
+Step 5) Text vector clustering. This step uses an SOM algorithm
+Fig. 6. Main process of text mining.
+to cluster the feature vectors based on similarities of re-
+search areas. The SOM algorithm is a typical unsupervised
+through the removal of all words that appeared only a few
+learning neural network model that clusters input data with
+times (say less than ﬁve times) in all proposal documents.
+similarities. Details of the SOM algorithm [33], [34] can be
+Step 3) Text document encoding. After text documents are seg-
+summarized as shown in Table II.
+mented, they are converted into a feature vector repre-
+sentation: V =(v ,v,...,v ),whereM is the number
+1 2 M
+D. Phase4:BalancingResearchProposalsandRegroupingThemby
+of features selected and v (i=1,2,...,M) is the TF-
+i
+ConsideringApplicants’Characteristics
+IDF encoding [18] of the keyword w . TF-IDF encoding
+i
+describes a weighted method based on inverse document
+In this phase, when the number of proposals in one cluster is still
+frequency (IDF) combined with the term frequency (TF)
+very large (e.g., more than 20), the applicants’ characteristics (e.g.,
+to produce the feature v, such that v = tf ∗log(N/df ),
+i i i
+afﬁliated universities) are considered. As mentioned in Sun et al. [15]
+whereN is the total number of proposals in the discipline,
+and Fanetal. [35], the proposal group composition should be diverse.
+tf is the term frequency of the feature word w ,anddf
+i i i
+In the past, reviewers sometimes handled proposals improperly, having
+is the number of proposals containing the word w . Thus,
+i
+poor group composition (e.g., the same afﬁliation in a speciﬁc pro-
+research proposals can be represented by corresponding
+posal group). Reviewers may feel confused and uncomfortable when
+feature vectors.
+evaluating proposals that may have poor group composition, so it is
+Step 4) Vector dimension reduction. The dimension of feature vec-
+advisable that the applicants’ characteristics in each proposal group
+tors is often too large; thus, it is necessary to reduce the should be as diverse as much as possible. Furthermore, the group size
+vectors’ size by automatically selecting a subset containing in each group should be similar. This is done as follows.
+788 IEEE TRANSACTIONS ON SYSTEMS, MAN, AND CYBERNETICS—PART A: SYSTEMS AND HUMANS, VOL. 42, NO. 3, MAY 2012
+TA B L E I I
+SUMMARY OF THE SOM ALGORITHM
+Fig. 7. Relation betweenF measurement andn inE .
+1
+IV. VALIDATING THE PROPOSED METHOD
+To validate the proposed approach, several experiments are con-
+ducted using the previous granted research projects. First, two experi-
+ments (E andE ) are constructed to evaluate the quality of clustering
+1 2
+research projects. Second, one experiment (E ) is used to validate
+3
+the effectiveness and efﬁciency of balancing research projects. In E ,
+1
+research projects in the discipline called information management are
+TABLE III
+randomly selected. In E , research projects in the discipline named
+2
+SUMMARY OF THE GA ALGORITHM
+artiﬁcial intelligence are randomly used. InE , research projects with
+3
+similar topics are randomly selected.
+In addition, the typical criterion for text clustering F measurement
+is used to measure the quality of clustering research projects. As
+mentioned in [37], for generated clusterc and predeﬁned research topic
+t, the corresponding Recall and Precision can be calculated as follows:
+Precision(c,t)=n(c,t)/n
+c
+Recall(c,t)=n(c,t)/n
+t
+wheren(c,t) is the project number of the intersection between cluster
+c and topic t. n is the number of projects in cluster c,andn is the
+c t
+number of projects in topic t. F measurement between cluster c and
+topict can be calculated as follows:
+We ﬁrst deﬁne an attribute set A that includes the applicant’s
+F(c,t)=(2∗ Recall(c,t)∗ Precision(c,t))
+characteristics. Then, the following optimization model is formed:
+/(Recall(c,t)+Precision(c,t)).
+G M−1 M G−1 G M M
+max d x x − x − x
+ij ig jg ig ih TheF measurement can be given by
+g=1 i=1 j>i g=1 h>g i=1 i=1
+n
+i
+F = max{F(i,j)}
+G
+n
+i
+s.t. x =1,fori=1,2,...,M,
+ig
+g=1
+where n is the whole number of research projects and i is each
+predeﬁned research topic.
+x ∈{0,1},fori=1,2,...,M andforg=1,2,...,G.
+ig
+In order to compare the clustering quality of the OTMM and the
+general TMM, the other settings of both methods are kept the same as
+where
+possible. The relations betweenF measurement and the number of re-
+search projectsn in these two disciplines can be found in Figs. 7 and 8.
+x decision variable. When a research proposal i is allocated to
+ig
+In Figs. 7 and 8, it can be seen that the performance of our proposed
+groupg,x =1 ; otherwise,x =0 ;
+ig ig
+method is better than that of the standard TMM. Therefore, the OTMM
+d number of different values in the attribute set A between
+ij
+can be an alternative for clustering research proposals.
+research proposalsi andj;
+In order to validate the effectiveness and efﬁciency of balancing
+M number of research proposals in a cluster;
+research projects, 300 research projects with similar topics are ran-
+G number of proposal groups.
+domly selected, and the different afﬁliations (Northeast, Northwest,
+This may be a very complex optimization problem, and one solution Southeast, Southwest, and Middle region) of the applicants were con-
+method that could be used is genetic algorithm [35]. Details of the sidered as the attribute set. The number of project groups is set to 60.
+GA algorithm [36] (Fan et al. 2008) that are applied in our case are The experimental result shows that the average number of different
+summarized as shown in Table III. afﬁliations in a group is 3.75, which is fairly diversiﬁed (see Fig. 9).
+                   
+IEEE TRANSACTIONS ON SYSTEMS, MAN, AND CYBERNETICS—PART A: SYSTEMS AND HUMANS, VOL. 42, NO. 3, MAY 2012 789
+method can also be used in other government research funding agen-
+cies that face information overload problems.
+Future work is needed to cluster external reviewers based on their
+research areas and to assign grouped research proposals to reviewers
+systematically. Also, there is a need to empirically compare the re-
+sults of manual classiﬁcation to text-mining classiﬁcation. Finally, the
+method can be expanded to help in ﬁnding a better match between
+proposals and reviewers.
+ACKNOWLEDGMENT
+The authors would like to thank the editors and the anonymous
+reviewers for their valuable comments and suggestions which have
+helped immensely in improving the quality of this paper.
+Fig. 8. Relation betweenF measurement andn inE .
+2
+REFERENCES
+[1] Q. Tian, J. Ma, and O. Liu, “A hybrid knowledge and model system for
+R&D project selection,” Expert Syst. Appl., vol. 23, no. 3, pp. 265–271,
+Oct. 2002.
+[2] K. Chen and N. Gorla, “Information system project selection using fuzzy
+logic,” IEEE Trans. Syst., Man, Cybern. A, Syst., Humans, vol. 28, no. 6,
+pp. 849–855, Nov. 1998.
+[3] A. D. Henriksen and A. J. Traynor, “A practical R&D project-selection
+scoring tool,” IEEE Trans. Eng. Manag., vol. 46, no. 2, pp. 158–170,
+May 1999.
+[4] F. Ghasemzadeh and N. P. Archer, “Project portfolio selection through
+decision support,” Decis. Support Syst., vol. 29, no. 1, pp. 73–88,
+Jul. 2000.
+[5] L. L. Machacha and P. Bhattacharya, “A fuzzy-logic-based approach to
+project selection,” IEEE Trans. Eng. Manag., vol. 47, no. 1, pp. 65–73,
+Feb. 2000.
+[6] J. Butler, D. J. Morrice, and P. W. Mullarkey, “A multiple attribute utility
+theory approach to ranking and selection,” Manage. Sci., vol. 47, no. 6,
+Fig. 9. Number of different afﬁliations in each group.
+pp. 800–816, Jun. 2001.
+[7] C. H. Loch and S. Kavadias, “Dynamic portfolio selection of NPD pro-
+The experimental results showed that the proposed method im- grams using marginal returns,” Manage. Sci., vol. 48, no. 10, pp. 1227–
+1241, Oct. 2002.
+proved the similarity in proposal groups, as well as balanced the
+[8] L. M. Meade and A. Presley, “R&D project selection using the analytic
+applicants’ characteristics. Therefore, the proposed method promotes
+network process,” IEEE Trans. Eng. Manag., vol. 49, no. 1, pp. 59–66,
+the efﬁciency in the proposal grouping process. By manual grouping,
+Feb. 2002.
+users need to spend at least one week, while the grouping can be [9] M. A. Greiner, J. W. Fowler, D. L. Shunk, W. M. Carlyle, and
+R. T. Mcnett, “A hybrid approach using the analytic hierarchy process and
+ﬁnished within hours using the proposed methods. Given that the
+integer programming to screen weapon systems projects,” IEEE Trans.
+method can expedite the process considerably, it can be used as the ﬁrst
+Eng. Manag., vol. 50, no. 2, pp. 192–203, May 2003.
+step in a machine–human collaboration where the automatic grouping
+[10] Q. Tian, J. Ma, J. Liang, R. Kowk, O. Liu, and Q. Zhang, “An organi-
+results are provided to a human that checks and then approves or
+zational decision support system for effective R&D project selection,”
+modiﬁes them. Decis.SupportSyst., vol. 39, no. 3, pp. 403–413, May 2005.
+[11] W. D. Cook, B. Golany, M. Kress, M. Penn, and T. Raviv, “Optimal allo-
+cation of proposals to reviewers to facilitate effective ranking,” Manage.
+Sci., vol. 51, no. 4, pp. 655–661, Apr. 2005.
+V. C ONCLUSION
+[12] A. Arya and B. Mittendorf, “Project assignment when budget padding
+taints resource allocation,” Manage. Sci., vol. 52, no. 9, pp. 1345–1358,
+This paper has presented an OTMM for grouping of research
+Sep. 2006.
+proposals. A research ontology is constructed to categorize the concept
+[13] C. Choi and Y. Park, “R&D proposal screening system based on text-
+terms in different discipline areas and to form relationships among
+mining approach,” Int. J. Technol. Intell. Plan., vol. 2, no. 1, pp. 61–72,
+them. It facilitates text-mining and optimization techniques to cluster
+2006.
+[14] K. Girotra, C. Terwiesch, and K. T. Ulrich, “Valuing R&D projects in
+research proposals based on their similarities and then to balance them
+a portfolio: Evidence from the pharmaceutical industry,” Manage. Sci.,
+according to the applicants’ characteristics. The experimental results
+vol. 53, no. 9, pp. 1452–1466, Sep. 2007.
+at the NSFC showed that the proposed method improved the similarity
+[15] Y. H. Sun, J. Ma, Z. P. Fan, and J. Wang, “A group decision support
+in proposal groups, as well as took into consideration the applicants’
+approach to evaluate experts for R&D project selection,” IEEE Trans.
+characteristics (e.g., distributing proposals equally according to the Eng. Manag., vol. 55, no. 1, pp. 158–170, Feb. 2008.
+[16] Y. H. Sun, J. Ma, Z. P. Fan, and J. Wang, “A hybrid knowledge and model
+applicants’ afﬁliations). Also, the proposed method promotes the
+approach for reviewer assignment,” Expert Syst. Appl., vol. 34, no. 2,
+efﬁciency in the proposal grouping process.
+pp. 817–824, Feb. 2008.
+The proposed method can be used to expedite and improve the
+[17] S. Hettich and M. Pazzani, “Mining for proposal reviewers: Lessons
+proposal grouping process in the NSFC and elsewhere. It uses
+learned at the National Science Foundation,” in Proc. 12th Int. Conf.
+Knowl.Discov.DataMining, 2006, pp. 862–871.
+the data collected from a research social network (ScholarMate;
+[18] R. Feldman and J. Sanger, The Text Mining Handbook: Advanced Ap-
+http://scholarmate.com) and extends the functions of the Internet-
+proaches in Analyzing Unstructured Data. New York: Cambridge Univ.
+based Science Information System (https://isis.nsfc.gov.cn). It also
+Press, 2007.
+provides a formal procedure that enables similar proposals to be
+[19] M. Konchady, Text Mining Application Programming. Boston, MA:
+grouped together in a professional and ethical manner. The proposed Charles River Media, 2006.
+790 IEEE TRANSACTIONS ON SYSTEMS, MAN, AND CYBERNETICS—PART A: SYSTEMS AND HUMANS, VOL. 42, NO. 3, MAY 2012
+[20] C. P. Wei and Y. H. Chang, “Discovering event evolution patterns from [33] F. M. Ham and I. Kostanic, Principles of Neurocomputing for Science &
+document sequences,”IEEETrans.Syst.,Man,Cybern.A,Syst.,Humans, Engineering. New York: McGraw-Hill, 2001.
+vol. 37, no. 2, pp. 273–283, Mar. 2007. [34] J. Vesanto and E. Alhoniemi, “Clustering of the self-organizing map,”
+[21] T. H. Cheng and C. P. Wei, “A clustering-based approach for integrat- IEEETrans.NeuralNetw., vol. 11, no. 3, pp. 586–600, May 2000.
+ing document-category hierarchies,” IEEE Trans. Syst., Man, Cybern. A, [35] D. E. Goldberg,GeneticAlgorithmsinSearch,OptimizationandMachine
+Syst.,Humans, vol. 38, no. 2, pp. 410–424, Mar. 2008. Learning. Redwood City: Addison-Wesley, 1989.
+[22] H. C. Yang and C. H. Lee, “A text mining approach for automatic con- [36] Z. P. Fan, Y. Chen, J. Ma, and Y. Zhu, “Decision support for
+struction of hypertexts,” Expert Syst. Appl., vol. 29, no. 4, pp. 723–734, proposal grouping: A hybrid approach using knowledge rule and
+Nov. 2005. genetic algorithm,” Expert Syst. Appl., vol. 36, no. 2, pp. 1004–1013,
+[23] M. Nagy and M. Vargas-Vera, “Multiagent ontology mapping framework Mar. 2009.
+for the semantic web,”IEEETrans.Syst.,Man,Cybern.A,Syst.,Humans, [37] Y. Liu, X. Wang, and C. Wu, “ConSOM: A conceptional self-organizing
+vol. 41, no. 4, pp. 693–704, Jul. 2011. map model for text clustering,” Neurocomputing, vol. 71, no. 4–6,
+[24] W. Fan, D. M. Gordon, and P. Pathak, “An integrated two-stage model pp. 857–862, Jan. 2008.
+for intelligent information routing,” Decis. Support Syst., vol. 42, no. 1, [38] D. Fensel, Ontologies: A Silver Bullet for Knowledge Management and
+pp. 362–374, Oct. 2006. ElectronicCommerce. Berlin, Germany: Springer-Verlag, 2004.
+[25] G. H. Lim, I. H. Suh, and H. Suh, “Ontology-based uniﬁed robot knowl- [39] J. Plisson, P. Ljubic, I. Mozetic, and N. Lavrac, “An ontology for virtual
+edge for service robots in indoor environments,” IEEE Trans. Syst., Man, organization breeding environments,”IEEETrans.Syst.,Man,Cybern.C,
+Cybern.A,Syst.,Humans, vol. 41, no. 3, pp. 492–509, May 2011. Appl.Rev., vol. 37, no. 6, pp. 1327–1341, Nov. 2007.
+[26] C. Lu, X. Hu, and J. R. Park, “Exploiting the social tagging network [40] M. Cai, W. Y. Zhang, and K. Zhang, “ManuHub: A semantic web system
+for web clustering,” IEEE Trans. Syst., Man, Cybern. A, Syst., Humans, for ontology-based service management in distributed manufacturing en-
+vol. 41, no. 5, pp. 840–852, Sep. 2011. vironments,” IEEE Trans. Syst., Man, Cybern. A, Syst., Humans, vol. 41,
+[27] A. J. C. Trappey, C. V. Trappey, F. C. Hsu, and D. W. Hsiao, “A fuzzy no. 3, pp. 574–582, May 2011.
+ontological knowledge document clustering methodology,” IEEE Trans. [41] Y. Liu, Y. Jiang, and L. Huang, “Modeling complex architectures based on
+Syst.,Man,Cybern.B,Cybern., vol. 39, no. 3, pp. 806–814, Jun. 2009. granular computing on ontology,”IEEETrans.FuzzySyst., vol. 18, no. 3,
+[28] M. Zhang, Z. Lu, and C. Zou, “A Chinese word segmentation based on pp. 585–598, Jun. 2010.
+language situation in processing ambiguous words,” Inf. Sci., vol. 162, [42] L. Razmerita, “An ontology-based framework for modeling user
+no. 3/4, pp. 275–285, Jun. 2004. behavior—A case study in knowledge management,” IEEE Trans.
+[29] T. Ong, H. Chen, W. Sung, and B. Zhu, “Newsmap: A knowledge map Syst., Man, Cybern. A, Syst., Humans, vol. 41, no. 4, pp. 772–783,
+for online news,” Decis. Support Syst., vol. 39, no. 4, pp. 583–597, Jul. 2011.
+Jun. 2005. [43] L. Zhou and D. Zhang, “An ontology-supported misinformation model:
+[30] Y. Liu, C. Xu, Q. Zhang, and Y. Pan, “The smart architect: Scalable Toward a sigital misinformation library,”IEEETrans.Syst.,Man,Cybern.
+ontology-based modeling of ancient Chinese architectures,” IEEE Intell. A,Syst.,Humans, vol. 37, no. 5, pp. 804–813, Sep. 2007.
+Syst., vol. 23, no. 1, pp. 49–56, Jan./Feb. 2008. [44] Q. Liang, X. Wu, E. K. Park, T. M. Khoshgoftaar, and C. H. Chi,
+[31] D. A. Chiang, H. C. Keh, H. H. Huang, and D. Chyr, “The Chinese text “Ontology-based business process customization for composite web ser-
+categorization system with association rule and category priority,”Expert vices,” IEEE Trans. Syst., Man, Cybern. A, Syst., Humans, vol. 41, no. 4,
+Syst.Appl., vol. 35, no. 1/2, pp. 102–110, Jul./Aug. 2008. pp. 717–729, Jul. 2011.
+[32] H. C. Yang, C. H. Lee, and D. W. Chen, “A method for multilingual text [45] O. Liu and J. Ma, “A multilingual ontology framework for R&D project
+mining and retrieval using growing hierarchical self-organizing maps,” J. management systems,” Expert Syst. Appl., vol. 37, no. 6, pp. 4626–4631,
+Inf.Sci., vol. 35, no. 1, pp. 3–23, Feb. 2009. Jun. 2010.

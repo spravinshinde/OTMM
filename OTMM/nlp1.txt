@@ -1,0 +1,518 @@
+
+An Ontology-Based Text-Mining Method to Cluster
+Proposals for Research Project Selection
+Research project selection is an important task for government
+and private research funding agencies. When a large number of
+research proposals are received, it is common to group them according
+to their similarities in research disciplines. The grouped proposals are
+then assigned to the appropriate experts for peer review. Current methods
+for grouping proposals are based on manual matching of similar
+research discipline areas and/or keywords. However, the exact research
+discipline areas of the proposals cannot often be accurately designated
+by the applicants due to their subjective views and possible misinterpretations.
+Therefore, rich information in the proposals’ full text can be
+used effectively. Text-mining methods have been proposed to solve the
+problem by automatically classifying text documents, mainly in English.
+However, these methods have limitations when dealing with non-English
+language texts, e.g., Chinese research proposals. This paper presents a
+novel ontology-based text-mining approach to cluster research proposals
+based on their similarities in research areas. The method is efficient and
+effective for clustering research proposals with both English and Chinese
+texts. The method also includes an optimization model that considers applicants’
+characteristics for balancing proposals by geographical regions.
+The proposed method is tested and validated based on the selection process
+at the National Natural Science Foundation of China. The results can also
+be used to improve the efficiency and effectiveness of research project
+selection processes in other government and private research funding
+agencies.
+Index Terms—Clustering analysis, decision support systems, ontology,
+research project selection, text mining.
+I. INTRODUCTION
+Selection of research projects is an important and recurring activity
+in many organizations such as government research funding agencies.
+It is a challenging multiprocess task that begins with a call for proposals
+(CFP) by a funding agency. The CFP is distributed to relevant
+communities such as universities or research institutions. The research
+proposals are submitted to the funding agency and then are assigned
+to experts for peer review. The review results are collected, and the
+proposals are then ranked based on the aggregation of the experts’
+and final awarding decision [1]. These processes are very similar in
+other funding agencies, except that there are a very large number of
+proposals that need to be grouped for peer review in the NSFC.
+In the NSFC, the number of research proposals received has more
+than doubled in the past four years, with over 110 000 proposals
+submitted in one deadline in March 2010. Four to five reviewers are
+assigned to review each proposal so as to assure accurate and reliable
+opinions on proposals. To deal with the large volume, it is necessary to
+group proposals according to their similarities in research disciplines
+and then to assign the proposal groups to relevant reviewers.
+Founded in 1986, the NSFC is the largest government funding
+agency in China, with the primary aim to fund and manage basic
+research. The agency is made up of seven scientific departments, four
+bureaus, one general office, and three associated units. The scientific
+departments are the decision-making units responsible for funding
+recommendations and management of funded projects. Departments
+are classified according to scientific research areas, including mathematical
+and physical sciences, chemical sciences, life sciences, earth
+sciences, engineering and material sciences, information sciences, and
+management sciences. These departments are further divided into 40
+divisions with a focus on more specific research areas. For example,
+the Department of Management Science is further divided into three
+divisions: Management Science and Engineering, Macro Management
+and Policy, and Business Administration. Furthermore, divisions are
+divided into discipline areas called programs.
+The department is responsible for the selection tasks, and it dedicates
+the tasks to divisions or programs. Division managers or program
+directors then group the proposals and assign them to external
+reviewers for evaluation and commentary. However, they may not have
+adequate knowledge in all research disciplines, and contents of many
+proposals were not fully understood when the proposals were grouped.
+Therefore, there was an urgent need for an effective and feasible
+approach to group the submitted research proposals with computer
+supports. An ontology-based text-mining approach is proposed to
+solve the problem.
+The remainder of this paper is organized as follows. Section II
+reviews the literature on research project selection and grouping of
+proposals. The proposed method is described in Section III. Section IV
+validates and evaluates the method, and then discusses the potential
+application in the NSFC. Finally, Section V provides the conclusion,
+and it points to future work.
+II. LITERATURE REVIEW
+Selection of research projects is an important research topic in
+research and development (R&D) project management. Previous research
+deals with specific topics, and several formal methods and
+proposed a fuzzy-logic-based model as a decision tool for project
+selection. Henriksen and Traynor [3] presented a scoring tool for
+project evaluation and selection. Ghasemzadeh and Archer [4] offered
+a decision support approach to project portfolio selection. Machacha
+and Bhattacharya [5] proposed a fuzzy logic approach to project selection.
+Butler et al. [6] used a multiple attribute utility theory for project
+ranking and selection. Loch and Kavadias [7] established a dynamic
+programming model for project selection, while Meade and Presley
+[8] developed an analytic network process model. Greiner et al. [9]
+proposed a hybrid AHP and integer programming approach to support
+project selection, and Tian et al. [10] suggested an organizational
+decision support approach for selecting R&D projects.
+Cook et al. [11] presented a method of optimal allocation of
+proposals to reviewers in order to facilitate the selection process.
+Arya and Mittendorf [12] proposed a rotation program method for
+project assignment. Choi and Park [13] used text-mining approach
+for R&D proposal screening. Girotra et al. [14] offered an empirical
+study to value projects in a portfolio. Sun et al. [15] developed a
+decision support system to evaluate reviewers for research project
+selection. Finally, Sun et al. [16] proposed a hybrid knowledge-based
+and modeling approach to assign reviewers to proposals for research
+project selection.
+Methods have been developed to group proposals for peer review
+tasks. For example, Hettich and Pazzani [17] proposed a text-mining
+approach to group proposals, identify reviewers, and assign reviewers
+to proposals. Current methods group proposals according to keywords.
+Unfortunately, proposals with similar research areas might be placed
+in wrong groups due to the following reasons: first, keywords are
+incomplete information about the full content of the proposals. Second,
+keywords are provided by applicants who may have subjective views
+and misconceptions, and keywords are only a partial representation of
+the research proposals. Third, manual grouping is usually conducted
+by division managers or program directors in funding agencies. They
+may have different understanding about the research disciplines and
+may not have adequate knowledge to assign proposals into the right
+groups. Text-mining methods (TMMs) [18], [19] have been designed
+to group proposals based on understating the English text, but they
+have limitations when dealing with other language texts, e.g., in
+Chinese. Also, when the number of proposals and reviewers increases
+(e.g., 110 000 proposals and 70 000 reviewers at the NSFC), it becomes
+a real challenge to find an effective and feasible method to group
+research proposals written in Chinese.
+This paper presents a hybrid method for grouping Chinese research
+proposals for project selection. It uses text-mining, multilingual
+ontology, optimization, and statistical analysis techniques to cluster
+research proposals based on their similarities. The proposed approach
+has been successfully tested at the NSFC. The experimental results
+indicated that the method can also be used to improve the efficiency
+and effectiveness of the research project selection process.
+III. ONTOLOGY-BASED TEXT MINING TO CLUSTER
+RESEARCH PROPOSALS
+In the NSFC, after proposals are submitted, the next important task
+is to group proposals and assign them to reviewers. The proposals in
+each group should have similar research characteristics. For instance, if
+the proposals in a group fall into the same primary research discipline
+(e.g., supply chain management) and the number of proposals is small,
+manual grouping based on keywords listed in proposals can be used.
+However, if the number of proposals is large, it is very difficult to group
+proposals manually.
+Although there are several text-mining approaches that can be used
+to cluster and classify documents [20]–[27], they are developed with a
+Fig. 2. Process of the proposed OTMM.
+focus on English text. TMMs which deal with English are not effective
+in processing Chinese text [28]. For example, Chinese text consists
+of strings of Chinese characters, while English text uses words. Also,
+Chinese text has no delimiters to mark word boundaries, while English
+text uses a space as word delimiter. Several methods were proposed
+to deal with Chinese text [29]–[32], but they are not efficient or
+sufficiently robust to process research proposals.
+To solve the aforementioned problems, an ontology-based TMM
+(OTMM) is proposed. An ontology is a knowledge repository in which
+concepts and terms are defined as well as relationships between these
+concepts [38]–[41]. It consists of a set of concepts, axioms, and
+relationships that describe a domain of interests and represents an
+agreed-upon conceptualization of the domain’s “real-world” setting.
+Implicit knowledge for humans is made explicit for computers by
+ontology [42]–[44]. Thus, ontology can automate information processing
+and can facilitate text mining in a specific domain (such as
+research project selection). The proposed OTMMis used together with
+statistical method and optimization models and consists of four phases,
+as shown in Fig. 2. First, a research ontology containing the projects
+funded in latest five years is constructed according to keywords, and
+it is updated annually (phase 1). Then, new research proposals are
+classified according to discipline areas using a sorting algorithm (phase
+2). Next, with reference to the ontology, the new proposals in each discipline
+are clustered using a self-organized mapping (SOM) algorithm
+(phase 3). Finally, (phase 4) if the number of proposals in each cluster
+is still very large, they will be further decomposed into subgroups
+where the applicants’ characteristics are taken into consideration (e.g.,
+applicants’ affiliations in each proposal group should be diverse). Each
+phase with its details is described in the following sections.
+
+A. Phase 1: Constructing a Research Ontology
+Funding agencies such as the NSFC maintain a directory of discipline
+areas that form a tree structure. As a domain ontology [41],
+a research ontology is a public concept set of the research project
+management domain. The research topics of different disciplines can
+be clearly expressed by a research ontology. Suppose that there are K
+discipline areas, and Ak denotes discipline area k(k = 1, 2, . . . , K).
+A research ontology can be constructed in the following three steps to
+represent the topics of the disciplines.
+Step 1) Creating the research topics of the disciplineAk,
+(k = 1, 2, . . . , K). The keywords of the supported
+research projects each year are collected, and their
+frequencies are counted (shown in Fig. 3). The keywords
+and their frequencies are denoted by the feature set
+(Nok, IDk, year,{(keyword1, frequency1),(keyword2,
+frequency2),. . . , (keywordk, frequencyk)}), where
+Nok is the sequence number of the kth record and IDk
+is the corresponding discipline code. For instance, if
+discipline Ak has two keywords in 2007 (i.e., “data
+mining” and “business intelligence”) and the total number
+of counts for them are 30 and 50, respectively, the discipline
+can be denoted by (Nok, IDk, 2007, {(data mining, 30),
+(business intelligence, 50)}). In this way, a feature set of
+each discipline can be created. The keyword frequency
+in the feature set is the sum of the same keywords that
+appeared in this discipline during the most recent five years
+(shown in Fig. 4), and then, the feature set of Ak is denoted
+by (Nok, IDk, {(keyword1, frequency1)(keyword2,
+frequency2), . . . ,(keywordk, frequencyk)}).
+Step 2) Constructing the research ontology. First, the research ontology
+is categorized according to scientific research areas
+introduced in the background. It is then developed on the
+basis of several specific research areas. Next, it is further divided
+into some narrower discipline areas. Finally, it leads
+to research topics in terms of the feature set of disciplines
+created in step 1. The research ontology is constructed,
+and its rough structure is shown in Fig. 5. It is more
+complex than just a tree-like structure. First, there are some
+cross-discipline research areas (e.g., “data mining” can be
+placed under “Information Management” in “Management
+Sciences” or under “Artificial Intelligence” in “Information
+Sciences”). Second, there are some synonyms used by
+different project applicants, which have different names
+in different proposals but represent the same concepts.
+Therefore, the research ontology allows more complex
+relationship between concepts besides the basic tree-like
+structure. Also, to deal with proposals with both English
+and Chinese text, it is designed as a multilingual ontology
+[45], which can process and share knowledge represented
+in multiple languages.
+Step 3) Updating the research ontology. Once the project funding
+is completed each year, the research ontology is updated
+according to agency’s policy and the change of the feature
+set.
+Using the research ontology, the submitted research proposals can
+be classified into disciplines correctly, and research proposal in one
+discipline can be clustered effectively and efficiently. The details will
+be given in the following two sections.
+B. Phase 2: Classifying New Research Proposals Into Disciplines
+Proposals are classified by the discipline areas to which they belong.
+A simple sorting algorithm is used next for proposals’ classification.
+This is done using the research ontology as follows.
+Suppose that there are K discipline areas, and Ak denotes area
+k(k = 1, 2, . . . , K). Pi denotes proposals i(i = 1, 2, . . . , I), and Sk
+represents the set of proposals which belongs to area k. Then, a sorting
+algorithm can be implemented to classify proposals to their discipline
+areas, as shown in Table I.
+C. Phase 3: Clustering Research Proposals Based on Similarities
+Using Text Mining
+After the research proposals are classified by the discipline areas,
+the proposals in each discipline are clustered using the text-mining
+technique [18], [19]. The main clustering process consists of five
+steps, as shown in Fig. 6: text document collection, text document
+preprocessing, text document encoding, vector dimension reduction,
+and text vector clustering.
+The details of each step are as follows.
+Step 1) Text document collection. After the research proposals are
+classified according to the discipline areas, the proposal
+documents in each discipline Ak(k = 1, 2, . . . , K) are collected
+for text document preprocessing.
+Step 2) Text document preprocessing. The contents of proposals are
+usually nonstructured. Because the texts of the proposals
+consist of Chinese characters which are difficult to segment,
+the research ontology is used to analyze, extract, and
+identify the keywords in the full text of the proposals. For
+example, “Research on behavior modeling and detection
+methods in financial fraud using ensemble learning” can
+be divided into word sets {“behavior modeling,” “detection
+method,” “financial fraud,” “ensemble learning”}. Finally,
+a further reduction in the vocabulary size can be achieved
+Structure of the research ontology.
+ SORTING ALGORIThm Main process of text mining.
+through the removal of all words that appeared only a few
+times (say less than five times) in all proposal documents.
+Step 3) Text document encoding. After text documents are segmented,
+they are converted into a feature vector representation:
+V = (v1, v2, . . . , vM), where M is the number
+of features selected and vi(i = 1, 2, . . . , M) is the TFIDF
+encoding [18] of the keyword wi. TF-IDF encoding
+describes a weighted method based on inverse document
+frequency (IDF) combined with the term frequency (TF)
+to produce the feature v, such that vi = tfi * log(N/dfi),
+where N is the total number of proposals in the discipline,
+tfi is the term frequency of the feature word wi, and dfi
+is the number of proposals containing the word wi. Thus,
+research proposals can be represented by corresponding
+feature vectors.
+Step 4) Vector dimension reduction. The dimension of feature vectors
+is often too large; thus, it is necessary to reduce the
+vectors’ size by automatically selecting a subset containing
+the most important keywords in terms of frequency. Latent
+semantic indexing (LSI) is used to solve the problem
+[18]. It not only reduces the dimensions of the feature
+vectors effectively but also creates the semantic relations
+among the keywords. LSI is a technique for substituting
+the original data vectors with shorter vectors in which
+the semantic information is preserved. To reduce the dimensions
+of the document vectors without losing useful
+information in a proposal, a term-by-document matrix is
+formed, where there is one column that corresponds to the
+term frequency of a document. Furthermore, the term-bydocument
+matrix is decomposed into a set of eigenvectors
+using singular-value decomposition. The eigenvectors that
+have the least impacts on the matrix are then discarded.
+Thus, the document vector formed from the term of the
+remaining eigenvectors has a very small dimension and
+retains almost all of the relevant original features.
+Step 5) Text vector clustering. This step uses an SOM algorithm
+to cluster the feature vectors based on similarities of research
+areas. The SOM algorithm is a typical unsupervised
+learning neural network model that clusters input data with
+similarities. Details of the SOM algorithm [33], [34] can be
+summarized as shown in Table II.
+D. Phase 4: Balancing Research Proposals and Regrouping Them by
+Considering Applicants’ Characteristics
+In this phase, when the number of proposals in one cluster is still
+very large (e.g., more than 20), the applicants’ characteristics (e.g.,
+affiliated universities) are considered. As mentioned in Sun et al. [15]
+and Fan et al. [35], the proposal group composition should be diverse.
+In the past, reviewers sometimes handled proposals improperly, having
+poor group composition (e.g., the same affiliation in a specific proposal
+group). Reviewers may feel confused and uncomfortable when
+evaluating proposals that may have poor group composition, so it is
+advisable that the applicants’ characteristics in each proposal group
+should be as diverse as much as possible. Furthermore, the group size
+To validate the proposed approach, several experiments are conducted
+using the previous granted research projects. First, two experiments
+(E1 and E2) are constructed to evaluate the quality of clustering
+research projects. Second, one experiment (E3) is used to validate
+the effectiveness and efficiency of balancing research projects. In E1,
+research projects in the discipline called information management are
+randomly selected. In E2, research projects in the discipline named
+artificial intelligence are randomly used. In E3, research projects with
+similar topics are randomly selected.
+In addition, the typical criterion for text clustering F measurement
+is used to measure the quality of clustering research projects. As
+mentioned in [37], for generated cluster c and predefined research topic
+t, the corresponding Recall and Precision can be calculated as follows:
+Precision(c, t) =n(c, t)/nc
+Recall(c, t) =n(c, t)/nt
+where n(c, t) is the project number of the intersection between cluster
+c and topic t. nc is the number of projects in cluster c, and nt is the
+number of projects in topic t. F measurement between cluster c and
+topic t can be calculated as follows:
+F(c, t) = (2 * Recall(c, t) * Precision(c, t))
+/ (Recall(c, t) + Precision(c, t)) .
+The F measurement can be given by
+F =
+i
+ni
+n
+max {F(i, j)}
+where n is the whole number of research projects and i is each
+predefined research topic.
+In order to compare the clustering quality of the OTMM and the
+general TMM, the other settings of both methods are kept the same as
+possible. The relations between F measurement and the number of research
+projects n in these two disciplines can be found in Figs. 7 and 8.
+In Figs. 7 and 8, it can be seen that the performance of our proposed
+method is better than that of the standard TMM. Therefore, the OTMM
+can be an alternative for clustering research proposals.
+In order to validate the effectiveness and efficiency of balancing
+research projects, 300 research projects with similar topics are randomly
+selected, and the different affiliations (Northeast, Northwest,
+Southeast, Southwest, and Middle region) of the applicants were considered
+as the attribute set. The number of project groups is set to 60.
+The experimental results showed that the proposed method improved
+the similarity in proposal groups, as well as balanced the
+applicants’ characteristics. Therefore, the proposed method promotes
+the efficiency in the proposal grouping process. By manual grouping,
+users need to spend at least one week, while the grouping can be
+finished within hours using the proposed methods. Given that the
+method can expedite the process considerably, it can be used as the first
+step in a machine–human collaboration where the automatic grouping
+results are provided to a human that checks and then approves or
+modifies them.
+V. CONCLUSION
+This paper has presented an OTMM for grouping of research
+proposals. A research ontology is constructed to categorize the concept
+terms in different discipline areas and to form relationships among
+them. It facilitates text-mining and optimization techniques to cluster
+research proposals based on their similarities and then to balance them
+according to the applicants’ characteristics. The experimental results
+at the NSFC showed that the proposed method improved the similarity
+in proposal groups, as well as took into consideration the applicants’
+characteristics (e.g., distributing proposals equally according to the
+applicants’ affiliations). Also, the proposed method promotes the
+efficiency in the proposal grouping process.
+The proposed method can be used to expedite and improve the
+proposal grouping process in the NSFC and elsewhere. It uses
+the data collected from a research social network (ScholarMate;
+http://scholarmate.com) and extends the functions of the Internetbased
+Science Information System (https://isis.nsfc.gov.cn). It also
+provides a formal procedure that enables similar proposals to be
+grouped together in a professional and ethical manner. The proposed
+method can also be used in other government research funding agencies
+that face information overload problems.
+Future work is needed to cluster external reviewers based on their
+research areas and to assign grouped research proposals to reviewers
+systematically. Also, there is a need to empirically compare the results
+of manual classification to text-mining classification. Finally, the
+method can be expanded to help in finding a better match between
+proposals and reviewers.
+SOM and k-means are two classical methods for text clustering. In this paper some experiments have been done
+to compare their performances. The sample data used is 420 articles which come from different topics. K-means
+method is simple and easy to implement; the structure of SOM is relatively complex, but the clustering results
+are more visual and easy to comprehend. The comparison results also show that k-means is sensitive to initiative
+distribution, whereas the overall clustering performance of SOM is better than that of k-means, and it also
+performs well for detection of noisy documents and topology preservation, thus make it more suitable for some
+applications such as navigation of document collection, multi-document summarization and etc. whereas the
+clustering results of SOM is sensitive to output layer topology
+Text Clustering, Self organizing maps, K-means, Clustering algorithm
+International Journal on Natural Language Computing (IJNLC) Vol. 4, No.4, August 2015
+DOI: 10.5121/ijnlc.2015.4405 54
+A Systematic study of Text Mining Techniques
+Pravin Shinde & Sharvari Govilkar
+Dept. of Information Technology, Mumbai University
+ABSTRACT
+Text mining is a new and exciting research area that tries to solve the information overload problem by using techniques from machine learning, natural language processing (NLP), data mining, information retrieval (IR), and knowledge management. Text mining involves the pre-processing of document collections such as information extraction, term extraction, text categorization, and storage of intermediate representations. The techniques that are used to analyse these intermediate representations such as clustering, distribution analysis, association rules and visualisation of the results.
+KEYWORDS
+Text categorization, IR, clustering, visualisation.
+1. INTRODUCTION
+Text mining can be referred as a knowledge intensive process in which using a various suites of analysis tools, user interacts with a document collection. The text mining also extracts the useful information from data sources through the explorations and identifications of interesting patterns, which are similar or analogous to data mining. In this case of text mining, the data sources are document collections, and patterns are not found among formalised database records but in the unstructured textual data in the documents in these collections.
+Certainly, from seminal research on data mining the text mining derives much of its direction and inspiration. So, it is not surprising to find that data mining and text mining systems have many high-level architectural similarities. For instance, both types of systems rely or based on pattern-discovery algorithms, presentation-layer elements and pre-processing routines such as visualisation tools to enhance the output data. Further, text mining adopts many of the specific types of patterns in its core knowledge discovery operations that were first introduced and vetted in data mining research.
+2. TEXT ENCODING
+It is necessary to pre-process the text documents and store the information in a data structure for mining large document collections, which is more suitable for further processing than a plain text file. Various methods exist that try to exploit also the syntactic structure and semantics of text document, most text mining approaches are based on the idea that a text document can be represented by a set of words, which means a text document is described based on the set of words contained in it.
+2.1. Text Mining Pre-processing Techniques
+There are two ways of categorizing the structuring techniques of document are according to their task, algorithms and formal frameworks that they use.
+International Journal on Natural Language Computing (IJNLC) Vol. 4, No.4, August 2015
+55
+Task oriented pre processing approaches envision the process of creating a structured document representation in terms of tasks and subtasks and usually involve some sort of preparatory goal or problem that needs to be solved such as extracting titles and authors from a PDF. In pre processing approaches are rely on techniques such that classification schemes, probabilistic models, and rule-based systems approaches for analysing complex phenomena that can be also applied to natural language texts.
+2.1.1. Task Oriented Approach
+A document has a variety of possible representations tree. The task of the document parsing process is to take the most raw representation and convert it to the representation through which the meaning of the document surfaces.
+A divide and conquer strategy is typically selected to face with this extremely difficult problem and the problem is divided into a set of subtasks, each of which is solved separately. The subtasks can be divided broadly into three classes preparatory processing, general purpose NLP tasks, and problem dependent tasks.
+The task of the preparatory processing is to convert the raw input into a stream of text, possibly labelling the internal text zones such as paragraphs, or tables, columns. Sometimes it is possible to extract some document level fields such as <Author> or <Title> in cases in which the visual position of the fields allows their identification.
+Fig.1. A taxonomy of text preprocessing tasks. [3]
+2.1.1.1. General Purpose NLP Tasks
+It is currently an orthodox opinion that language processing in humans cannot be separated into independent components. Various experiments in psycholinguistics clearly demonstrate that the different stages of analysis like phonetic, morphological, syntactical, semantical, and pragmatically occur simultaneously and depend on each other.
+2.2. Problem-Dependent Tasks: Text Categorization and Information Extraction
+The final stages of document structuring create representations that are meaningful for either later processing phases or direct interaction of the text mining system user. The nature of the features sharply distinguishes between the two main techniques: text categorisation and
+International Journal on Natural Language Computing (IJNLC) Vol. 4, No.4, August 2015
+56
+information extraction (IE). Text categorisation and IE enable users to move from a “machine readable” representation of the documents to a “machine understandable” form of the documents.
+3. Categorization
+Probably the most common portion in analysing complex data is the categorization or classification of elements. Described abstractly, the task is to classify a given data instance into a pre-specified set of categories. Applied to the domain of document management, the task is known as text categorization, given a set of categories (subjects, topics) and a collection of text documents.
+3.1. Machine Learning Approach to TC
+In this approach, by learning the properties of categories from a set of pre classified training documents, the classifier is built automatically. In this case the learning process is an instance of supervised learning because the process is guided by applying the known true category assignment function on the training set. The clustering is also called as unsupervised version of the classification task. For classifier learning there are many approaches available some of them are variants of more general ML algorithms and others have been created specifically for categorization.
+3.1.1. Probabilistic Classifiers
+Probabilistic classifiers show the categorization status value CSV (d, c) with the probability P(c | d) where document d belongs to the category c and compute this probability by an application of Bayes’ theorem:
+The marginal probability P(d) need not be computed because it is constant for all categories. To calculate P(d | c), we need to make some assumptions about the structure of the document d. With the document representation as a feature vector d = (w1, w2 , . . .), the most common assumption is that all coordinates are independent, and thus the classifiers resulting from this assumption are called Naive Bayes (NB) classifiers. They are called “naive” because the assumption is never verified and often is quite obviously false. However, the attempts to relax the naive assumption and to use the probabilistic models with dependence so far have not produced any significant improvement in performance.
+3.1.2. Decision Tree Classifiers
+A decision tree (DT) classifier is a tree in which the internal nodes are labelled by the features, the edges leaving a node are labelled by tests on the feature’s weight, and the leaves are labelled by categories. A DT categorises a document by starting at the root of the tree and moving successively downward via the branches whose conditions are satisfied by the document until a leaf node is reached. The document is then assigned to the category that labels the leaf node.
+International Journal on Natural Language Computing (IJNLC) Vol. 4, No.4, August 2015
+57
+Fig. 2 A Decision Tree classifier. [3]
+3.1.3. Neural Networks
+Neural network (NN) can be built to perform text categorization. Normally, the input nodes of the network receive the feature values categorization status values produced by output nodes and the dependence relations represent by link weights. For classifying a document the feature weights are loaded into the input nodes, activation of the nodes is propagated forward through the network, and the final values on output nodes determine the categorization decisions.
+The NN are trained by back propagation, where as the training documents are loaded into the input nodes. If a misclassification error occurs then it is propagated back through the network and modifying the link weights in order to minimise the error.
+3.1.4. Support Vector Machines
+The support vector machine (SVM) algorithm is very effective and fast for text classification problems.
+A binary SVM classifier in geometrical terms can be seen as a hyperplane in the feature space separating the points that represent the positive instances of the category from the points that represent the negative instances. The classifying hyperplane is chosen during training as the unique hyperplane that separates the known positive instances from the known negative instances with the maximal margin. The margin is the distance from the hyperplane to the nearest point from the positive and negative sets. The Figure 3 is an example of a maximal margin hyperplane in two dimensions.
+SVM hyperplane are determined by a relatively small subset of the training instances which are called the support vectors. The SVM classifier has an important advantage in its theoretically justified approach to the over fitting problem, which allows it to perform well irrespective of the dimensionality of the feature space. Also, it needs no parameter adjustment.
+International Journal on Natural Language Computing (IJNLC) Vol. 4, No.4, August 2015
+58
+Fig. 3. Diagram of a 2-D Linear SVM. [3]
+4. Clustering
+Clustering method can be used in order to make groups of documents with similar content or information. The result of clustering is typically a partition P which is a set of clusters P. Every cluster consists of a number of documents they should be similar and dissimilar to clusters of other documents. Clustering algorithms compute the clusters based on the attributes of the data and measures of similarity or dissimilarity.
+4.1. Clustering Algorithms
+Several different variants of an abstract clustering problem exist. A flat (or partitioned) clustering produces a single partition of a set of objects into disjoint groups, whereas a hierarchical clustering results in a nested series of partitions.
+The most commonly used algorithms are the K-means (hard, flat, shuffling), the EM-based mixture resolving (soft, flat, probabilistic), and the HAC (hierarchical, agglomerative).
+4.1.1. K-Means Algorithm
+The K-means algorithm partitions a collection of vectors {x1, x2,..,xn} into the set of clusters {C1, C2, . . . Ck}. The algorithm needs k cluster seeds for initialization. They can be externally supplied or picked up randomly among the vectors.
+The algorithm proceeds as follows:
+Initialization
+K seeds, either given or selected randomly, form the core of k clusters. Every other vector is assigned to the cluster of the closest seed.
+Iteration:
+The centroid Mi of the current cluster is computed:
+International Journal on Natural Language Computing (IJNLC) Vol. 4, No.4, August 2015
+59
+Each vector is reassigned to the cluster with the closest centroid.
+Stopping condition:
+At convergence – when no more changes occur.
+The K-means algorithm maximises the clustering quality function Q:
+If the distance metric (inverse of the similarity function) behaves well with respect to the centroids computation, then each iteration of the algorithm increases the value of Q. A sufficient condition is that the centroid of a set of vectors be the vector that maximises the sum of similarities to all the vectors in the set. This condition is true for all “natural” metrics. It follows that the K-means algorithm always converges to a local maximum.
+The K-means algorithm is popular because of its simplicity and efficiency. The complexity of each iteration is O(kn) similarity comparisons, and the number of necessary iterations is usually quite small.
+4.2 Hierarchical Agglomerative Clustering (HAC)
+The HAC algorithm begins its work with each object in particular cluster and proceeds, according to some chosen criterion it is repeatedly merge pairs of clusters that are most similar. The HAC algorithm finishes when everything is merged into a single cluster. Binary tree of the clusters hierarchy is provided by history of merging.
+The algorithm proceeds as follows:
+Initialization:
+Each and every object is put into a separate cluster.
+Iteration:
+Find the pair of most similar clusters and merge them.
+Stopping condition:
+Repeat step 2 till single cluster is formed.
+When everything is merged into single cluster different versions of the algorithm can be produced, then it is calculated the similarity between clusters. The complexity of this algorithm is O(n2s), where n is the number of objects and s the complexity of calculating similarity between clusters. Measuring the Quality of an algorithm needs human judgment, which introduces a high degree of subjectivity.
+Given a set of categorised (manually classified) documents, it is possible to use this benchmark labelling for evaluation of clustering’s. The most common measure is purity. Assume {L1, L2,..., Ln} are the manually labelled classes of documents, and {C1, C2, . . . , Cm} are the clusters returned by the clustering process. Then,
+International Journal on Natural Language Computing (IJNLC) Vol. 4, No.4, August 2015
+60
+5. Information Extraction
+The Natural language texts have information, which is not suitable for computers for analysis purpose. Where as computers uses large amount of text and extract useful information from passages, phrases or single words. So Information Extraction can be considered as restricted form of natural language understanding and here we know about the semantic information, we are seeking for. The task of information Extraction is to extract parts of text and assign specific attribute to it.
+5.1. Hidden Markov Models
+One of the main problem of standard classification approaches they are not considered the predicted labels of the surrounding words and it can be done using probabilistic models of sequences of labels and features. The Hidden Markov model (HMM) based on conditional distributions of current labels L(j) given the previous label L(j-1) and the distribution of the current word t(j) given the current and the previous labels L(j), L(j-1).
+The algorithm is required the training set and their correct label for computing their frequency. The Viterbi algorithm is an efficient learning method which exploit the sequential structure. The HMM were successfully used for named entity extraction.
+6. Visualization Methods
+The Information provided by graphical visualization is more better, comphrensive and faster understandable than pure text based description so it is best for mining the large document collection. Most of the approaches of text mining are motivated by the methods which had been proposed in the area of visual data mining, information visualizations and explorative data mining.
+This method can improve the discovery or extraction of relevant patterns or information for text mining and information retrieval systems. Information that allow a visual representation comprises aspects of result set, keyword relations or ontology are considered the aspects of the search process itself.
+7. Applications and merits/demerits
+Classification of news as a Text: In the daily newspaper the users would like to see stories of people at different places and organizations etc. such task are tedious when we do it manually. So in this case text mining approach like information extraction can be used to do this kind of task which would retrieve the template having different entity and their relationship with each other in the structured format. Which can be putted into the database, then we can applied for retrieving the interesting patterns.
+Analysis of the Market trends: Everybody knows that corporate market around us is how much growing fast, in order to know about our competitors and the growth of an organizations and their number of the employees. To get such information, manual work is a tedious task or
+International Journal on Natural Language Computing (IJNLC) Vol. 4, No.4, August 2015
+61
+impossible task. But by using text mining approaches like classifications or information extractions it is easy to simplify the task.
+Analysis of the junk Emails: This is a common application for text mining is in automatic analysis of the junk E-mails that are undesirable. The classification technique of text mining can be used to classify such mails on the basis of pre-defined frequently occurring terms.
+Merits of Text mining:
+i) As database can store less amount of information, this problem has been solved through Text Mining.
+ii) Using the technique such as information extraction, the names of different entities, relationship between them can easily be found from the corpus of documents set.
+iii) Text mining has solved the problem of managing such a great amount of unstructured information for extracting patterns easily; otherwise it would have been a great challenge.
+Demerits of Text mining:
+i) No programs can be made in order to analyse the unstructured text directly, to mine the text for information or knowledge.
+ii) The information which is initially needed is nowhere written.
+8. Conclusion
+In this paper the introduction of text mining and its methods has been tried to cover. Because of this we motivated this field of research, and gave more formal definition to the terms, which are used herein and presented the brief overview of text mining and its methods, their properties and their applications.
+Now days there has been lot of work did on the document using text mining methods. The improvement for text mining is still an interesting, open issue and as in current world scenario time is the prime constraint of any application. So as to do fast work with highest performance one can think to implement the existing methods on parallel platform.

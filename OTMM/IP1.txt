@@ -1,0 +1,46 @@
+In imaging science, image processing is processing of images using mathematical operations by using any form of signal processing for which the input is an image, such as a photograph or video frame; the output of image processing may be either an image or a set of characteristics or parameters related to the image.[1] Most image-processing techniques involve treating the image as a two-dimensional signal and applying standard signal-processing techniques to it.
+
+Image processing usually refers to digital image processing, but optical and analog image processing also are possible. This article is about general techniques that apply to all of them. The acquisition of images (producing the input image in the first place) is referred to as imaging.[2]
+
+Closely related to image processing are computer graphics and computer vision. In computer graphics, images are manually made from physical models of objects, environments, and lighting, instead of being acquired (via imaging devices such as cameras) from natural scenes, as in most animated movies. Computer vision, on the other hand, is often considered high-level image processing out of which a machine/computer/software intends to decipher the physical contents of an image or a sequence of images (e.g., videos or 3D full-body magnetic resonance scans).
+
+In modern sciences and technologies, images also gain much broader scopes due to the ever growing importance of scientific visualization (of often large-scale complex scientific/experimental data). Examples include microarray data in genetic research, or real-time multi-asset portfolio trading in finance.
+Objective quality assessment for compressed images is critical to various image compression systems that are essential in image delivery and storage. Although the mean squared error (MSE) is computationally simple, it may not be accurate to reflect the perceptual quality of compressed images, which is also affected dramatically by the characteristics of human visual system (HVS), such as masking effect. In this paper, an image quality metric (IQM) is proposed based on perceptually weighted distortion in terms of the MSE. To capture the characteristics of HVS, a randomness map is proposed to measure the masking effect and a preprocessing scheme is proposed to simulate the processing that occurs in the initial part of HVS. Since the masking effect highly depends on the structural randomness, the prediction error from neighborhood with a statistical model is used to measure the significance of masking. Meanwhile, the imperceptible signal with high frequency could be removed by preprocessing with low-pass filters. The relation is investigated between the distortions before and after masking effect, and a masking modulation model is proposed to simulate the masking effect after preprocessing. 
+Digital image processing is the use of computer algorithms to perform image processing on digital images. As a subcategory or field of digital signal processing, digital image processing has many advantages over analog image processing. It allows a much wider range of algorithms to be applied to the input data and can avoid problems such as the build-up of noise and signal distortion during processing. Since images are defined over two dimensions (perhaps more) digital image processing may be model in the form of multidimensional systems.
+Digital image processing allows the use of much more complex algorithms, and hence, can offer both more sophisticated performance at simple tasks, and the implementation of methods which would be impossible by analog means.
+
+In particular, digital image processing is the only practical technology for:
+
+Classification
+Feature extraction
+Pattern recognition
+Projection
+Multi-scale signal analysis
+Some techniques which are used in digital image processing include:
+
+Pixelation
+Linear filtering
+Principal components analysis
+Independent component analysis
+Hidden Markov models
+Anisotropic diffusion
+Partial differential equations
+Self-organizing maps
+Neural networks
+WaveletsDigital cameras generally include specialized digital image processing hardware – either dedicated chips or added circuitry on other chips – to convert the raw data from their image sensor into a color-corrected image in a standard image file format.[4] Images from digital cameras can be further processed to improve their quality or to create desired special effects. This additional processing is typically executed by special software programs that can manipulate the images in a variety of ways.Image processing is a method to convert an image into digital form and perform some operations on it, in order to get an enhanced image or to extract some useful information from it. It is a type of signal dispensation in which input is image, like video frame or photograph and output may be image or characteristics associated with that image. Usually Image Processing system includes treating images as two dimensional signals while applying already set signal processing methods to them. 
+
+It is among rapidly growing technologies today, with its applications in various aspects of a business. Image Processing forms core research area within engineering and computer science disciplines too.
+ 
+Image processing basically includes the following three steps.
+Importing the image with optical scanner or by digital photography.
+Analyzing and manipulating the image which includes data compression and image enhancement and spotting patterns that are not to human eyes like satellite photographs.
+Output is the last stage in which result can be altered image or report that is based on image analysis.
+Computer vision is a field that includes methods for acquiring, processing, analyzing, and understanding images and, in general, high-dimensional data from the real world in order to produce numerical or symbolic information, e.g., in the forms of decisions.[1][2][3][4] A theme in the development of this field has been to duplicate the abilities of human vision by electronically perceiving and understanding an image.[5] Understanding in this context means the transformation of visual images (the input of retina) into descriptions of world that can interface with other thought processes and elicit appropriate action. This image understanding can be seen as the disentangling of symbolic information from image data using models constructed with the aid of geometry, physics, statistics, and learning theory.[6] Computer vision has also been described as the enterprise of automating and integrating a wide range of processes and representations for vision perception.[7]
+
+As a scientific discipline, computer vision is concerned with the theory behind artificial systems that extract information from images. The image data can take many forms, such as video sequences, views from multiple cameras, or multi-dimensional data from a medical scanner. As a technological discipline, computer vision seeks to apply its theories and models to the construction of computer vision systems.
+
+Sub-domains of computer vision include scene reconstruction, event detection, video tracking, object recognition, object pose estimation, learning, indexing, motion estimation, and image restoration.Image processing and image analysis tend to focus on 2D images, how to transform one image to another, e.g., by pixel-wise operations such as contrast enhancement, local operations such as edge extraction or noise removal, or geometrical transformations such as rotating the image. This characterization implies that image processing/analysis neither require assumptions nor produce interpretations about the image content.
+Computer vision includes 3D analysis from 2D images. This analyzes the 3D scene projected onto one or several images, e.g., how to reconstruct structure or other information about the 3D scene from one or several images. Computer vision often relies on more or less complex assumptions about the scene depicted in an image.
+Machine vision is the process of applying a range of technologies & methods to provide imaging-based automatic inspection, process control and robot guidance[8] in industrial applications.[9] Machine vision tends to focus on applications, mainly in manufacturing, e.g., vision based autonomous robots and systems for vision based inspection or measurement. This implies that image sensor technologies and control theory often are integrated with the processing of image data to control a robot and that real-time processing is emphasised by means of efficient implementations in hardware and software. It also implies that the external conditions such as lighting can be and are often more controlled in machine vision than they are in general computer vision, which can enable the use of different algorithms.
+There is also a field called imaging which primarily focus on the process of producing images, but sometimes also deals with processing and analysis of images. For example, medical imaging includes substantial work on the analysis of image data in medical applications.
+Finally, pattern recognition is a field which uses various methods to extract information from signals in general, mainly based on statistical approaches. A significant part of this field is devoted to applying these methods to image data.
